@@ -1,0 +1,17 @@
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5)
+ * 
+ * (c) Copyright 2009-2013 SAP AG. All rights reserved
+ */
+jQuery.sap.declare("sap.m.IconTabBar");jQuery.sap.require("sap.m.library");jQuery.sap.require("sap.ui.core.Control");sap.ui.core.Control.extend("sap.m.IconTabBar",{metadata:{library:"sap.m",properties:{"showSelection":{type:"boolean",group:"Misc",defaultValue:true,deprecated:true},"expandable":{type:"boolean",group:"Misc",defaultValue:true},"expanded":{type:"boolean",group:"Misc",defaultValue:true},"selectedKey":{type:"string",group:"Data",defaultValue:null},"visible":{type:"boolean",group:"Behavior",defaultValue:true}},aggregations:{"items":{type:"sap.m.IconTab",multiple:true,singularName:"item"},"content":{type:"sap.ui.core.Control",multiple:true,singularName:"content"}},events:{"select":{},"expand":{}}}});sap.m.IconTabBar.M_EVENTS={'select':'select','expand':'expand'};
+sap.m.IconTabBar.prototype.init=function(){};
+sap.m.IconTabBar.prototype.exit=function(){};
+sap.m.IconTabBar.prototype.onBeforeRendering=function(){if(!this.oSelectedItem){this.oSelectedItem=this.getItems()[0]}this.setProperty("selectedKey",this.oSelectedItem.getKey(),true)};
+sap.m.IconTabBar.prototype.setSelectedItem=function(i){if(!i.getEnabled()){return}var $=jQuery.sap.byId(this.getId()+"-content");if(this.oSelectedItem===i&&this.getExpandable()){this.toggleExpandCollapse()}else{if($.length>0){$.empty()}this.oSelectedItem=i;var s=this.oSelectedItem.getContent();if(s.length>0){this._rerenderContent(s)}else{this._rerenderContent(this.getContent())}if(this.getExpanded()===false){this.toggleExpandCollapse()}this.adjustArrow()}this.setProperty("selectedKey",this.oSelectedItem.getKey(),true);this.fireSelect({selectedItem:this.oSelectedItem,selectedKey:this.oSelectedItem.getKey(),item:this.oSelectedItem,key:this.oSelectedItem.getKey()})};
+sap.m.IconTabBar.prototype._rerenderContent=function(c){var $=jQuery.sap.byId(this.getId()+"-content");if(c.length>0){var r=sap.ui.getCore().createRenderManager();for(var i=0;i<c.length;i++){r.renderControl(c[i])}r.flush($[0]);r.destroy()}};
+sap.m.IconTabBar.prototype.adjustArrow=function(){var $=jQuery.sap.byId(this.getId()+"-arrow"),a;if(this.oSelectedItem){a=this.oSelectedItem.$();if(a.length>0){a.siblings().removeClass("sapMITSelected");a.addClass("sapMITSelected");var l=a[0].offsetLeft+a.outerWidth()/2-$.width()/2;$.css("left",l+"px")}}};
+sap.m.IconTabBar.prototype.onAfterRendering=function(){this.adjustArrow()};
+sap.m.IconTabBar.prototype.onThemeChanged=function(e){this.adjustArrow()};
+sap.m.IconTabBar.prototype.onTransitionEnded=function(){var $=jQuery.sap.byId(this.getId()+"-content");var e=this.getExpanded();$.toggleClass("sapMITBContentClosed",!e);if(e){jQuery.sap.byId(this.getId()+"-arrow").show();$.css("display","block")}else{$.css("display","none")}};
+sap.m.IconTabBar.prototype.toggleExpandCollapse=function(){var e=!this.getExpanded();var $=jQuery.sap.byId(this.getId()+"-content");var a=jQuery.sap.byId(this.getId()+"-arrow");var b=jQuery.sap.byId(this._getItemByKey(this.getItems(),this.getSelectedKey()).getId());b.toggleClass("sapMITBContentTabSelected",e);if(e){$.slideDown('400',jQuery.proxy(this.onTransitionEnded,this))}else{a.hide();$.slideUp('400',jQuery.proxy(this.onTransitionEnded,this))}this.setProperty("expanded",e,true);this.fireExpand({expand:e,collapse:!e})};
+sap.m.IconTabBar.prototype._getItemByKey=function(I,k){for(var i=0;i<I.length;i++){if(I[i]instanceof sap.m.IconTabFilter){if(I[i].getKey()===k){return I[i]}}}};

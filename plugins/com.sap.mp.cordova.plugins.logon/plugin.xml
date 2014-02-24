@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.sap.mp.cordova.plugins.logon"
+    version="3.0.2">
+    
+    <name>Logon</name>
+    <dependency id="com.sap.mp.cordova.plugins.corelibs" url="." subdir="corelibs" />
+    <dependency id="org.apache.cordova.inappbrowser" url="." subdir="logon/inappbrowser"/>
+    <dependency id="org.apache.cordova.device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" />
+    <dependency id="org.apache.cordova.console" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-console.git" />
+    
+    <asset target="smp/logon" src="www/common/assets"/>
+    
+    <js-module name="LogonCore" src="www/common/modules/MAFLogonCorePlugin.js">
+        <clobbers target="sap.logon.Core"/>
+	</js-module>
+    <js-module name="LogonI18n" src="www/common/modules/i18n.js">
+        <clobbers target="sap.logon.i18n"/>
+    </js-module>
+    <js-module name="LogonUtils" src="www/common/modules/Utils.js">
+        <clobbers target="sap.logon.Utils"/>
+    </js-module>
+    <js-module name="LogonStaticScreens" src="www/common/modules/StaticScreens.js">
+        <clobbers target="sap.logon.StaticScreens"/>
+    </js-module>
+    <js-module name="LogonDynamicScreens" src="www/common/modules/DynamicScreens.js">
+        <clobbers target="sap.logon.DynamicScreens"/>
+    </js-module>
+    <js-module name="Logon" src="www/common/modules/LogonController.js">
+        <clobbers target="sap.Logon"/>
+    </js-module>
+    <js-module name="LogonIabUi" src="www/common/modules/InAppBrowserUI.js">
+        <clobbers target="sap.logon.IabUi"/>
+    </js-module>
+    
+    <platform name="android">
+        <source-file target-dir="libs" src="android/libs/maflogger-1.202.0.jar" />
+        <source-file target-dir="libs" src="android/libs/maflogoncore-1.202.0.jar" />
+        <source-file target-dir="libs" src="android/libs/maflogoncorecdvplugin-3.0.2.jar" />
+        
+        <config-file target="res/xml/config.xml" parent="/widget">
+            <feature name="MAFLogonCoreCDVPluginJS" required="true">
+                <param name="android-package" value="com.sap.maf.html5.android.MAFLogonCoreCDVPlugin"/>
+            </feature>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="com.sap.mobile.clientHub.CLIENTHUB_ACCESS_PERMISSION" />
+  		</config-file>
+        
+    </platform>
+
+    <platform name="ios">
+        <source-file src="ios/libs/libMAFLogger.a" framework="true"/>
+        <source-file src="ios/libs/libMAFLogonCoreCDVPlugin.a" framework="true"/>
+        <source-file src="ios/libs/libMAFLogonManagerNG.a" framework="true"/>
+        
+        <resource-file src="ios/bundles/MAFLogonManagerNG.bundle" />
+        
+        <config-file target="config.xml" parent="/*">
+            <feature name="MAFLogonCoreCDVPluginJS">
+                <param name="ios-package" value="MAFLogonCoreCDVPlugin"/>
+            </feature>
+        </config-file>
+    </platform>
+</plugin>
+

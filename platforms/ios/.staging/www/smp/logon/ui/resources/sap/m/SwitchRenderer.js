@@ -1,0 +1,7 @@
+/*!
+ * SAP UI development toolkit for HTML5 (SAPUI5)
+ * 
+ * (c) Copyright 2009-2013 SAP AG. All rights reserved
+ */
+jQuery.sap.declare("sap.m.SwitchRenderer");sap.m.SwitchRenderer={};
+sap.m.SwitchRenderer.render=function(r,s){var S=s.getState(),a=S?s._sOn:s._sOff,t=s.getTooltip_AsString(),T=s.getType(),d=(T==="Default"),D=!s.getEnabled(),n=s.getName();if(!s.getVisible()){return}r.write('<div');r.addClass("sapMSwtCont");if(D){r.addClass("sapMSwtContDisabled")}r.writeClasses();r.writeStyles();r.writeControlData(s);if(t){r.writeAttributeEscaped("title",t)}r.write(">");r.write("<div");r.addClass("sapMSwt");S?r.addClass("sapMSwtOn"):r.addClass("sapMSwtOff");r.addClass("sapMSwt"+T);if(D){r.addClass("sapMSwtDisabled")}r.writeClasses();r.write('>');r.write('<div class="sapMSwtInner">');r.write('<div class="sapMSwtText sapMSwtTextOn">');r.write("<span>");if(d){r.writeEscaped(s._sOn)}r.write("</span>");r.write("</div>");r.write('<div class="sapMSwtText sapMSwtTextOff">');r.write("<span>");if(d){r.writeEscaped(s._sOff)}r.write("</span>");r.write("</div>");r.write('<div class="sapMSwtHandle"');r.writeAttributeEscaped("data-sap-ui-swt",a);r.write("></div>");r.write("</div>");r.write("</div>");if(n){r.write('<input type="checkbox"');r.writeAttributeEscaped("name",n);r.writeAttribute("id",s.getId()+"-input");if(S){r.writeAttribute("checked","checked")}if(D){r.writeAttribute("disabled","disabled")}r.writeAttributeEscaped("value",a);r.write(">")}r.write("</div>")};

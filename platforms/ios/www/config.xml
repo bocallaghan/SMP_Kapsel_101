@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.bf.test" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ktest</name>
+    <description>
+        A sample SAP Mobility Platform Kapsel Application.
+    </description>
+    <author email="callaghan001@gmail.com" href="http://www.bluefinsolutions.com">
+        Brenton O'Callaghan
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+</widget>
